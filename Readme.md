@@ -74,7 +74,7 @@
 
 ```bash
 # Clone repository
-git clone https://github.com/Bouni/ModBusGateway.git
+git clone https://github.com/sachin42/ModBusGateway.git
 cd ModBusGateway
 
 # Install dependency
