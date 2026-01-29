@@ -1,0 +1,26 @@
+[Unit]
+Description=Modbus TCP/RTU Gateway
+Documentation=https://github.com/your-repo/modbus-gateway
+After=network.target
+BindsTo=dev-rs485.device
+After=dev-rs485.device
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/modbus-gateway/modbus-gateway.py
+WorkingDirectory=/opt/modbus-gateway
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+User=modbus
+Group=dialout
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/modbus-gateway
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,26 @@
+# Udev rule for USB-to-RS485 adapter
+# Creates /dev/rs485 symlink and triggers modbus-gateway service
+#
+# To find your adapter's vendor/product ID, run:
+#   lsusb
+#   udevadm info -a -n /dev/ttyUSB0 | grep -E "idVendor|idProduct"
+#
+# Common USB-to-RS485 adapters:
+#   FTDI FT232:     idVendor=0403, idProduct=6001
+#   CH340/CH341:    idVendor=1a86, idProduct=7523
+#   CP2102/CP2104:  idVendor=10c4, idProduct=ea60
+#   Prolific PL2303: idVendor=067b, idProduct=2303
+#
+# Modify the idVendor and idProduct below to match your adapter
+
+# FTDI FT232-based adapter
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="rs485", TAG+="systemd", ENV{SYSTEMD_WANTS}="modbus-gateway.service"
+
+# CH340/CH341-based adapter (uncomment if using this type)
+#SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="rs485", TAG+="systemd", ENV{SYSTEMD_WANTS}="modbus-gateway.service"
+
+# CP2102/CP2104-based adapter (uncomment if using this type)
+#SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="rs485", TAG+="systemd", ENV{SYSTEMD_WANTS}="modbus-gateway.service"
+
+# Prolific PL2303-based adapter (uncomment if using this type)
+#SUBSYSTEM=="tty", ATTRS{idVendor}=="067b", ATTRS{idProduct}=="2303", SYMLINK+="rs485", TAG+="systemd", ENV{SYSTEMD_WANTS}="modbus-gateway.service"
